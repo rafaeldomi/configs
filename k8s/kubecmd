@@ -1,0 +1,39 @@
+#!/bin/bash
+
+kc() {
+	ADD=""
+
+	if [ ! -z $KUBENS ]; then
+		b=0
+		# Verifica se tem a opção -n nos parametros, se tiver não adiciona
+		for var in "$@"; do
+			if [ "$var" == "-n" ]; then
+				b=1
+				echo " ** NAMESPACE: Utilizando o informado"
+				break
+			fi
+			if [ "$var" == "apply" ]; then
+				# Apply não passa namespace
+				b=1
+			fi
+			if [ "$var" == "-A" ]; then
+				# -A = all namespaces
+				b=1
+			fi
+		done
+
+		if [ "$b" == "0" ]; then
+			ADD="$ADD -n $KUBENS"
+			echo " ** NAMESPACE: $KUBENS"
+		fi
+	fi
+
+	echo "Vai executar: ${ADD} ${@}"
+	echo
+
+	kubectl ${ADD} ${@}
+}
+
+change_kube() {
+	:
+}
