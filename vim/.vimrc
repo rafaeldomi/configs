@@ -1,4 +1,4 @@
-" Habilita syntax highlights
+" Enable syntax highlights
 syntax on
 
 " Set a tabstop by 4 spaces -- I like it ^^
@@ -18,10 +18,12 @@ set nu
 set colorcolumn=80
 highlight ColorColumn ctermbg=52
 
-" Uncomment the following to have Vim jump to the last position when                                                       
-" reopening a file
+" Make Vim jump to the last position when reopening a file
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \| exe "normal! g'\"" | endif
 endif
 
+filetype plugin indent on
+" When in a yaml file make tab 2 spaces
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
